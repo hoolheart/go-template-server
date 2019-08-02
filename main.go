@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	_"git.dev.tencent.com/petit_kayak/go-template-server/database"
 )
 
 // salute 处理问好请求

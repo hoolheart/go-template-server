@@ -1,0 +1,9 @@
+{
+    "driver": "postgres",
+    "host": "127.0.0.1",
+    "port": 0,
+    "user": "hoolheart",
+    "password": "142857",
+    "database": "db_template",
+    "sslmode": "disable"
+}
