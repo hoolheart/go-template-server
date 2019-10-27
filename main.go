@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
-	_"git.dev.tencent.com/petit_kayak/go-template-server/database"
+	"git.dev.tencent.com/petit_kayak/go-template-server/services"
 )
 
 // salute 处理问好请求
@@ -24,6 +24,9 @@ func main() {
 	// prepare mux
 	mux := http.NewServeMux()
 	mux.HandleFunc("/salute/",salute)
+
+	//setup services
+	services.Setup(mux)
 
 	// create and start server
 	server := &http.Server {
