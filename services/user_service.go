@@ -9,50 +9,60 @@ import (
 	"git.dev.tencent.com/petit_kayak/go-template-server/user"
 )
 
+// RegisterPara contains the parameters for registration
 type RegisterPara struct {
 	Email 		string
 	Name			string
 	Password	string
 }
 
+// LoginPara contains the parameters for login
 type LoginPara struct {
-	email 		string
-	password	string
+	Email 		string
+	Password	string
 }
 
+// StartSessionPara contains the parameters for starting new session
 type StartSessionPara struct {
 	UserID		string
 }
 
+// CheckSessionPara contains the parameters for checking existing session
 type CheckSessionPara struct {
 	SessionID	string
 }
 
+// FinishSessionPara contains the parameters for finishing existing session
 type FinishSessionPara struct {
 	SessionID	string
 }
 
+// LogoutPara contains the parameters for logout
 type LogoutPara struct {
 	SessionID	string
 }
 
+// UserInfo contains information of a user
 type UserInfo struct {
 	UserID	string
 	Email 	string 
 	Name		string
 }
 
+// SessionInfo contains information of a session
 type SessionInfo struct {
 	SessionID 	string
 	UserID			string
 	CreatedAt	time.Time
 }
 
+// GeneralEcho is a general echo
 type GeneralEcho struct {
 	Result	bool
 	Error		string
 }
 
+// SuccessEcho is an echo with information of user and session when succeeded
 type SuccessEcho struct {
 	Result			bool
 	UserInfo		UserInfo
@@ -60,6 +70,7 @@ type SuccessEcho struct {
 }
 
 func register(writer http.ResponseWriter, request *http.Request) {
+	writer.Header().Add("Content-Type","application/json")//content type
 	para := RegisterPara{}//prepare parameter
 	echo := GeneralEcho{}//prepare echo
 	err := common.LoadJSON(request.Body,&para)//parse
@@ -80,8 +91,42 @@ func register(writer http.ResponseWriter, request *http.Request) {
 			echo = GeneralEcho{true,""}
 		}
 	}
-
 	err = common.ExportJSON(&echo,writer)//export echo
+	if err!= nil {
+		log.Printf("Failed to return echo: %s", err.Error())
+	}
+}
+
+func login(writer http.ResponseWriter, request *http.Request) {
+	writer.Header().Add("Content-Type","application/json")//content type
+	para := LoginPara{}//prepare parameter
+	echo := GeneralEcho{false,""}//prepare general echo
+	err := common.LoadJSON(request.Body,&para)//parse parameter
+	if err!=nil {
+		log.Printf("Failed to parse register parameter: %s", err.Error())//log
+		echo.Error = "Parse Parameter Error"//fill echo error
+	} else {
+		u, err := user.GetUserByEmail(database.TemplateDb,para.Email,para.Password)//try login
+		if err!=nil || u.ID==0 {
+			log.Printf("Failed to login with email %s", para.Email)//log
+			echo.Error = "Login Error"//fill echo error
+		} else {
+			session, err := u.StartSession(database.TemplateDb)//try to start session
+			if err!=nil || session.ID==0 {
+				log.Printf("Failed to start session for user %s", u.UUID)//log
+				echo.Error = "Start Session Error"//fill echo error
+			} else {
+				echo.Result = true//mark success
+				infoEcho := SuccessEcho{true,
+					UserInfo{u.UUID,u.Email,u.Name},
+					SessionInfo{session.UUID,session.UserID,session.CreatedTs}}//fill info echo
+				err = common.ExportJSON(&infoEcho,writer)//export info
+			}
+		}
+	}
+	if !echo.Result {
+		err = common.ExportJSON(&echo,writer)//export echo
+	}
 	if err!= nil {
 		log.Printf("Failed to return echo: %s", err.Error())
 	}
