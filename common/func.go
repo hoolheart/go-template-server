@@ -9,6 +9,14 @@ import (
 	"encoding/json"
 )
 
+// If implements an altenative of ?: operator
+func If(cond bool, trueVal, falseVal interface{}) (interface{}) {
+	if cond {
+		return trueVal
+	}
+	return falseVal
+}
+
 // CreateUUID a random UUID with from RFC 4122
 // adapted from http://github.com/nu7hatch/gouuid
 func CreateUUID() (uuid string) {

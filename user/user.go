@@ -48,6 +48,13 @@ func New(db *sql.DB, name string, email string, password string) (user User, err
 	return
 }
 
+// Get an existing user with given uuid
+func Get(db *sql.DB, uuid string) (user User, err error) {
+	user.UUID = uuid//fill uuid
+	err = user.Fetch(db)//try to fetch user info
+	return
+}
+
 // Fetch user info by using uuid
 func (user *User)Fetch(db *sql.DB) (err error) {
 	statement := "select id, email, name, password, created_at from t_user where uuid = $1"//prepare statement
@@ -83,13 +90,13 @@ func Users(db *sql.DB) (users []User, err error) {
 
 // Update user name and email
 func (user *User) Update(db *sql.DB) (err error) {
-	statement := "update t_user set name = $2, email = $3 where id = $1"
+	statement := "update t_user set name = $2, email = $3 where uuid = $1"
 	stmt, err := db.Prepare(statement)//prepare statement
 	if err != nil {
 		return
 	}
 	defer stmt.Close()
-	_, err = stmt.Exec(user.ID, user.Name, user.Email)//execute statement
+	_, err = stmt.Exec(user.UUID, user.Name, user.Email)//execute statement
 	return
 }
 
@@ -111,20 +118,20 @@ func (user *User) ChangePassword(db *sql.DB, curPw string, newPw string) (err er
 		return
 	}
 	defer stmt.Close()
-	user.Password = common.Encrypt(curPw)//update password
+	user.Password = common.Encrypt(newPw)//update password
 	_, err = stmt.Exec(user.ID, user.Password)//execute statement
 	return
 }
 
 // Delete an existing user
 func (user *User) Delete(db *sql.DB) (err error) {
-	statement := "delete from t_user where id = $1"
+	statement := "delete from t_user where uuid = $1"
 	stmt, err := db.Prepare(statement)//prepare statement
 	if err != nil {
 		return
 	}
 	defer stmt.Close()
-	_, err = stmt.Exec(user.ID)//execute statement
+	_, err = stmt.Exec(user.UUID)//execute statement
 	return
 }
 
