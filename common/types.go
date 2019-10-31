@@ -10,12 +10,12 @@ type ModuleError struct {
 	body			string//error body
 }
 
-// NewError creates a new ModuleError
-func NewError(mod,pack,foo,body string) (err ModuleError) {
-	return ModuleError{mod,pack,foo,body}
-}
-
 // Error string of given ModuleError
 func (err ModuleError) Error() (string) {
 	return fmt.Sprintf("[%s/%s:%s] %s",err.module,err.pack,err.function,err.body)
+}
+
+// NewError creates a new ModuleError
+func NewError(mod,pack,foo,body string) (err error) {
+	return ModuleError{mod,pack,foo,body}
 }
