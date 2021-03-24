@@ -3,7 +3,7 @@ package user
 import (
 	"database/sql"
 	"time"
-	"git.dev.tencent.com/petit_kayak/go-template-server/common"
+	"gitee.com/alpha-bootes/go-template-server/common"
 )
 
 // User structure

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"git.dev.tencent.com/petit_kayak/go-template-server/services"
+	"gitee.com/alpha-bootes/go-template-server/services"
 )
 
 type writerPacker struct {

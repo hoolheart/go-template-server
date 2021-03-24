@@ -4,9 +4,9 @@ import (
 	"log"
 	"time"
 	"net/http"
-	"git.dev.tencent.com/petit_kayak/go-template-server/common"
-	"git.dev.tencent.com/petit_kayak/go-template-server/database"
-	"git.dev.tencent.com/petit_kayak/go-template-server/user"
+	"gitee.com/alpha-bootes/go-template-server/common"
+	"gitee.com/alpha-bootes/go-template-server/database"
+	"gitee.com/alpha-bootes/go-template-server/user"
 )
 
 // RegisterPara contains the parameters for registration
