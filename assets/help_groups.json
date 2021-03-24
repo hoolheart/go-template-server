@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Installed CLI Plugins",
+    "items": [
+      { "link": "https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel", "text": "babel" },
+      { "link": "https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-router", "text": "router" },
+      { "link": "https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-vuex", "text": "vuex" },
+      { "link": "https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint", "text": "eslint" },
+      { "link": "https://github.com/forsartis/vue-cli-plugin-tailwind", "text": "tailwind" }
+    ]
+  },
+  {
+    "title": "Essential links",
+    "items": [
+      { "link": "https://vuejs.org", "text": "Core Docs" },
+      { "link": "https://forum.vuejs.org", "text": "Forum" },
+      { "link": "https://chat.vuejs.org", "text": "Community Chat" },
+      { "link": "https://twitter.com/vuejs", "text": "Twitter" },
+      { "link": "https://news.vuejs.org", "text": "News" }
+    ]
+  },
+  {
+    "title": "Ecosystem",
+    "items": [
+      { "link": "https://router.vuejs.org", "text": "vue-router" },
+      { "link": "https://vuex.vuejs.org", "text": "vuex" },
+      { "link": "https://github.com/vuejs/vue-devtools#vue-devtools", "text": "vue-devtools" },
+      { "link": "https://vue-loader.vuejs.org", "text": "vue-loader" },
+      { "link": "https://github.com/vuejs/awesome-vue", "text": "awesome-vue" }
+    ]
+  }
+]

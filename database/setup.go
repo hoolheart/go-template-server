@@ -27,7 +27,7 @@ type dbCfg struct {
 // init function initialize the database connection for template application
 func init() {
 	var cfg dbCfg//prepare configuration
-	file, err := os.Open("database/cfg.json")//open configure file
+	file, err := os.Open("assets/database_cfg.json")//open configure file
 	if err == nil {
 		defer file.Close()
 		err = json.NewDecoder(file).Decode(&cfg)//parse setting from configure

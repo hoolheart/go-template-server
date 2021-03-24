@@ -10,4 +10,5 @@ func Setup(mux *http.ServeMux) {
 	mux.HandleFunc("/api/user/login",login)
 	mux.HandleFunc("/api/user/logout",logout)
 	mux.HandleFunc("/api/user/session",sessionHandler)
+	mux.HandleFunc("/api/help",getHelpInfo)
 }

@@ -60,7 +60,7 @@ func main() {
 
 	// create and start server
 	server := &http.Server {
-		Addr: "0.0.0.0:8080",
+		Addr: "0.0.0.0:4000",
 		Handler: &logHandler{mux},
 	}
 	server.ListenAndServe()
