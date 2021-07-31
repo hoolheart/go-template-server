@@ -121,7 +121,10 @@ func getUser(writer http.ResponseWriter, request *http.Request) {
 	if err!=nil {
 		log.Printf("Failed to parse parameter: %s", err.Error())//log
 		echo.Error = "Parse parameter error"//fill echo error
-	} else if len(para.UserID)==0 {
+		request.ParseForm()
+		para.UserID = request.FormValue("user_id")
+	}
+	if len(para.UserID)==0 {
 		log.Println("Failed to parse user ID from the request")//log
 		echo.Error = "No user ID specified"//fill echo error
 	} else {
@@ -379,9 +382,13 @@ func checkSession(writer http.ResponseWriter, request *http.Request) {
 	echo := GeneralEcho{false,""}//prepare echo
 	err := common.LoadJSON(request.Body,&para)//parse parameter
 	if err!=nil {
-		log.Printf("Failed to parse parameter: %s", err.Error())//log
-		echo.Error = "Parse parameter error"//fill echo error
-	} else if len(para.SessionID)==0 {
+		//log.Printf("Failed to parse parameter: %s", err.Error())//log
+		//echo.Error = "Parse parameter error"//fill echo error
+		request.ParseForm()
+		para.SessionID = request.FormValue("session_id")//get session id from request form
+		err = nil
+	}
+	if len(para.SessionID)==0 {
 		log.Println("Failed to parse session ID from the request")//log
 		echo.Error = "No session ID specified"//fill echo error
 	} else {
